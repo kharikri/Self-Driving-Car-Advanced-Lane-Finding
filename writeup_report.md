@@ -25,7 +25,7 @@ My project includes the following files:
 * **P4_AdvancedLaneFinding.ipynb** contains the python code and in the following writeup all references to python code points to this file
 * **writeup_report.md** summarizes the process used and results
 * **output_images** directory containing output images shown in this writeup
-* The final output video is on Youtube and linked at the end of this report
+* The final output video is on YouTube and linked at the end of this report
 
 ### Writeup/README
 
@@ -80,20 +80,20 @@ I have two functions to fit polynomials. The first function `initial_lane_polyno
 
 Once I identify the histogram peaks I roughly know where the lane lines are in the image. Using these peaks as the starting points I use the sliding window approach to fit the polynomials. In the sliding window method I collect the non-zero pixels along a line starting from the two histogram peaks all the way to the top of the image. After I collect the non-zero pixels along the height of the two histogram peaks, I fit a 2nd order polynomial (`Ay**2 + By + C`) through these pixels. I show the initial line fitting with the sliding windows in the left of the picture shown below.
 
-The second line fitting function called `subsequent_lane_polynomials()` is used once I find a good initial fit. The code is in the 11th cell of the notebook. Here I do not go through the tedius process of finding the histogram and collecting the pixels through sliding windows. I simply start from the previous good fit and search around these polynomials within a margin. In the following picture on the right I show the subsequent polynomial fit. The green shaded area shows the margin where I search for the pixels.
+The second line fitting function called `subsequent_lane_polynomials()` is used once I find a good initial fit. The code is in the 11th cell of the notebook. Here I do not go through the tedious process of finding the histogram and collecting the pixels through sliding windows. I simply start from the previous good fit and search around these polynomials within a margin. In the following picture on the right I show the subsequent polynomial fit. The green shaded area shows the margin where I search for the pixels.
 
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/initial_line_s.jpg) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/subs_line_s.jpg)
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-The radius of the curvature of the lane is required to determine the suitable driving speed for the vehicle. The  [U.S. government specifications for highway curvature](http://onlinemanuals.txdot.gov/txdotmanuals/rdw/horizontal_alignment.htm#BGBHGEGC) gives the radius and speed specifications. For example to drive at 45mph the minimum radius should be 246 meters.
+The radius of the curvature of the lane is required to determine the suitable driving speed for the vehicle. The  [U.S. government specifications for highway curvature](http://onlinemanuals.txdot.gov/txdotmanuals/rdw/horizontal_alignment.htm#BGBHGEGC) gives the radius and speed specifications. For example, to drive at 45mph the minimum radius should be 246 meters.
 
 To calculate the radius of the lane I first fit a circle of appropriate radius so that the curvature of the lane and the circle has the same tangent. Here is a visualization:
 
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/radius.jpg)
 
-Once I have such a circle than I simply calculate the radius of the circle which approximates to the radius of the lane. The math to calcluate the radius is [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The code  (`radius_of_curvature()`) is in cell 13.
+Once I have such a circle than I simply calculate the radius of the circle which approximates to the radius of the lane. The math to calculate the radius is [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The code  (`radius_of_curvature()`) is in cell 13.
 
 The lane offset is simply the difference between the midpoint of the lane and the midpoint of the car. Midpoint of the lane is obtained by the difference between the right and left lane. Midpoint of the car is the middle of the image assuming the camera is mounted at the midpoint of the car. The code (`lane_offset()`) is in cell 14.
 
@@ -124,10 +124,10 @@ The video pipeline in cell 24 simply runs the image pipeline (`process_image()`)
 My algorithm (in cell 18) for finding polynomials is as follows:
 1. Use the sliding window approach to find the initial polynomial for the first frame
 2. From the second frame onwards we use targeted search to find subsequent polynomials
-3. However if for five continuous video frames the polynomails do not satisfy our sanity check we go back to step one and start looking for a new polynomial with the sliding window approach
+3. However, if for five continuous video frames the polynomails do not satisfy our sanity check we go back to step one and start looking for a new polynomial with the sliding window approach
 
 The sanity check (in cell 12 of the notebook) simply checks to see if the lane lines are roughly parallel. This uses another function called `lane_width()` (in cell 15) to calculate the width of the lane.
 
-This simple approach works for the assignment video -- `project_video`. However this does not do a good job for the challenge video as this video has newly laid asphalt on the road and my algorithm confuses the edge of the newly laid asphalt as a lane. This needs to be  fixed at the histogram stage by accounting for reasonable width of the road.
+This simple approach works for the assignment video -- `project_video`. However, this does not do a good job for the challenge video as this video has newly laid asphalt on the road and my algorithm confuses the edge of the newly laid asphalt as a lane. This needs to be  fixed at the histogram stage by accounting for reasonable width of the road.
 
 My overall impression is lane detection with computer vision is fairly straightforward and predictable (unlike DNNs), but to make it work for every road condition will become tedious. 
