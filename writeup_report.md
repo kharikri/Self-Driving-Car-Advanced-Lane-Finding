@@ -130,4 +130,4 @@ The sanity check (in cell 12 of the notebook) simply checks to see if the lane l
 
 This simple approach works for the assignment video -- `project_video`. However, this does not do a good job for the challenge video as this video has newly laid asphalt on the road and my algorithm confuses the edge of the newly laid asphalt as a lane. This needs to be  fixed at the histogram stage by accounting for reasonable width of the road.
 
-My overall impression is lane detection with computer vision is fairly straightforward and predictable (unlike DNNs), but to make it work for every road condition will become tedious. 
+My overall impression is lane detection with computer vision is fairly straightforward and predictable (unlike DNNs), but to make it work for every road condition will become exhausting. A combination of computer vision and DNN might be an approach to take.
