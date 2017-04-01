@@ -95,7 +95,7 @@ To calculate the radius of the lane I first fit a circle of appropriate radius s
 
 Once I have such a circle than I simply calculate the radius of the circle which approximates to the radius of the lane. The math to calculate the radius is [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The code  (`radius_of_curvature()`) is in cell 13.
 
-The lane offset is simply the difference between the midpoint of the lane and the midpoint of the car. Midpoint of the lane is obtained by the difference between the right and left lane. Midpoint of the car is the middle of the image assuming the camera is mounted at the midpoint of the car. The code (`lane_offset()`) is in cell 14.
+The lane offset is simply the difference between the midpoint of the lane and the midpoint of the car. Midpoint of the lane is obtained by the difference between the right and left lanes. Midpoint of the car is the middle of the image assuming the camera is mounted at the midpoint of the car. The code (`lane_offset()`) is in cell 14.
 
 For both the radius and the lane offset I convert the dimensions from number of pixels to meters.
 
