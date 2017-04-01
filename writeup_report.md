@@ -23,7 +23,7 @@ The goals of this project are the following:
 
 My project includes the following files:
 * **P4_AdvancedLaneFinding.ipynb** contains the python code and in the following writeup all references to python code points to this file. Use this file to produce the output video
-* **P4_AdvancedLaneFindingWithVisualization.ipynb** contains the python code including the visualization
+* **P4_AdvancedLaneFindingWithVisualization.ipynb** contains the python code with the visualization
 * **writeup_report.md** summarizes the process used and results
 * **output_images** directory containing output images shown in this writeup
 * The final output video is on Youtube and linked at the end of this report
@@ -47,7 +47,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test_dist_s.jpg)
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test_undist_s.jpg)
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Original Distorted Image &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Undistorted Image
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Original Distorted Image &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Undistorted Image
 
 ### Pipeline (single images)
 
@@ -106,7 +106,7 @@ I implemented this step in cell 16. Here we warp back the polynomoial lines usin
 
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/fnl_img.jpg)
 
-The above six steps are implemented in a pipeline in `process_image()` (in cell 18). It takes one image at a time and does each of the above steps in sequence.
+The above six steps are implemented in a pipeline in `process_image()` (implemented in cell 18). It takes one image at a time and does each of the above steps in sequence.
 
 ---
 
