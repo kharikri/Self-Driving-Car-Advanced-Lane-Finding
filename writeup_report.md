@@ -45,8 +45,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result. The code for this is in the 3rd cell of the notebook: 
 
 ![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test_dist_s.jpg)
-
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/test_undist_s.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test_undist_s.jpg)
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Original Distorted Image &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Undistorted Image
 
@@ -54,17 +53,18 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Provide an example of a distortion-corrected image.
 I took one of the test images (`test1.jpg`) shown on the left and the undistorted image is shown on the right. To see the undistortion effect look at the dashboard of the car at left or the right bottom and you'll see that in the undistorted image it is slightly flattened. The code for this is in the 4th cell of the notebook:
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/test1_dist_undist_s.jpg)
+
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test1_dist_undist_s.jpg)
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used six different thresholds (X, Y, Mag, Direction, S, R). The first four of them are gradient and the last two are color. Then I output a binary image of these thresholds. The code for this is in the 5th cell of the notebook. The following picture shows all the six thresholds for `test1.jpg`:
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/XMSThresh.jpg)
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/YDRThresh.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/XMSThresh.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/YDRThresh.jpg)
 
 As you will notice from the above picture, the X, S, and R thresholds filter the vertical lines better than the others. So I'll combine these three in the following to see which produces the sharpest binary.
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/XSRThresh_s.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/XSRThresh_s.jpg)
 
 I used all these four combinations in the video pipeline and I got the best results for the X+S+R threshold even though the S+R combined binary looks the sharpest filtering out the trees and irrelevant details. This because over the long run of the video under different conditions (shade, sun, trees, etc) the X+S+R threshold performs better so I use that for my pipeline.
 
@@ -72,18 +72,19 @@ I used all these four combinations in the video pipeline and I got the best resu
 
 The code for my perspective transform includes a function called `warp()`, which appears in the 9th cell of the IPython notebook.  The `warp()` function takes an image (`img`) as the input, undistorts it and using the perspective matrix `M` and the function `cv2.warpPerspective()` to warp the image. The perspective Matrix `M` is obtained by choosing a trapezoid (`src` points) which gets transformed into a rectangle (`dst` points) with the function `M = cv2.getPerspectiveTransform(src, dst)`. I hardcoded the source and destination points. I applied the `warp`function to the test image and I got the following result. This picture shows the source and destination points drawn out on the image. The lines in the warped image are parallel:
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/warp_s.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/warp_s.jpg)
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 I have two functions to fit polynomials. The first function `initial_lane_polynomials()` is used for the very first frame of the video. The code is in the 10th cell of the notebook. Here we first find the histogram of the lower half of the image to find the pixel concentrations. If we did a good job of filtering with the thresholds we should see two peaks as shown in the following histogram:
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/hist_s.jpg)
+
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/hist_s.jpg)
 
 Once we identify the histogram peaks we roughly know where the lane lines are in the image. Using these peaks as the starting points we use the sliding window approach to fit the polynomials. In the sliding window method we collect the non-zero pixels along a line starting from the two histogram peaks all the way to the top of the image. Once we collect the non-zero pixels along the height of the two histogram peaks we fit a 2nd order polynomial (`Ay**2 + By + C`) through these pixels. I show the initial line fitting with the sliding windows in the left of the picture shown below.
 
 The second line fitting function called `subsequent_lane_polynomials()` is used once we find a good initial fit. The code is in the 11th cell of the notebook. Here we do not have to go through the tedius process of finding the histogram and collecting the pixels through sliding windows. We simply start from the previous good fit and search around these polynomials within a margin. In the following picture on the right I show the subsequent polynomial fit. The green shaded area shows the margin where we search of the pixels.
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/initial_line_s.jpg) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/subs_line_s.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/initial_line_s.jpg) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/subs_line_s.jpg)
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
@@ -91,7 +92,7 @@ The radius of the curvature of the lane is required to determine the suitable dr
 
 To calculate the radius of the lane we first fit a circle of appropriate radius so that the curvature of the lane and the circle has the same tangent. Here is a visualization:
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/radius.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/radius.jpg)
 
 Once we have such a circle than we simply calculate the radius of the circle which approximates to the radius of the lane. The math to calcluate the radius comes from [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The code  (`radius_of_curvature()`) is in cell 13.
 
@@ -103,7 +104,7 @@ For both the radius and the lane offset we convert the dimensions from number of
 
 I implemented this step in cell 16. Here we warp back the polynomoial lines using inverse perspective matrix (`Minv`) and combine them on the original image. Here is an example of my result on a test image. This image also shows the radii and lane offset in meters.
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/fnl_img.jpg)
+![alt text](https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/fnl_img.jpg)
 
 The above six steps are implemented in a pipeline in `process_image()` (in cell 18). It takes one image at a time and does each of the above steps in sequence.
 
