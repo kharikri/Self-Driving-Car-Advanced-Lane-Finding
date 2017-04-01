@@ -123,8 +123,8 @@ The video pipeline in cell 24 simply runs the image pipeline (`process_image()`)
 
 My algorithm (in cell 18) for finding polynomials is as follows:
 1. Use the sliding window approach to find the initial polynomial for the first frame
-2. From the second frame onwards we use targeted search to find subsequent polynomials
-3. However, if for five continuous video frames the polynomails do not satisfy our sanity check we go back to step one and start looking for a new polynomial with the sliding window approach
+2. From the second frame onwards I use a targeted search to find subsequent polynomials
+3. However if for five continuous video frames the polynomials do not satisfy the sanity check, I go back to step one and start looking for a new polynomial with the sliding window approach
 
 The sanity check (in cell 12 of the notebook) simply checks to see if the lane lines are roughly parallel. This uses another function called `lane_width()` (in cell 15) to calculate the width of the lane.
 
