@@ -44,7 +44,8 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result. The code for this is in the 3rd cell of the notebook: 
 
-![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/test_dist_s.jpg)
+![alt text]https://github.com/kharikri/SelfDrivingCar-AdvancedLaneFinding/blob/master/output_images/test_dist_s.jpg
+
 ![alt text](file:///C:/Users/Kris/Kris Stuff/Online Courses/SDC/Projects/Project 4 - Advanced Lane Detection/CarND-Advanced-Lane-Lines-master/output_images/test_undist_s.jpg)
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Original Distorted Image &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Undistorted Image
