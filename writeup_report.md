@@ -113,7 +113,7 @@ The above six steps are implemented in a pipeline in `process_image()` (implemen
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-The video pipeline in cell 25 simply runs the image pipeline (`process_image()`) in sequence by feeding one image at a time. Here's the [link to my video result from first submission](https://www.youtube.com/embed/TX92Vc7ZQl4?ecver=1). Here is the [video link for my second submission](https://www.youtube.com/embed/leiNx8SJiLs?ecver=1).
+The video pipeline in cell 25 simply runs the image pipeline (`process_image()`) in sequence by feeding one image at a time. Here's the [link to my video result from first submission](https://www.youtube.com/embed/TX92Vc7ZQl4?ecver=1). Here is the [**video link for my second submission**](https://www.youtube.com/embed/leiNx8SJiLs?ecver=1).
 
 I've made the following changes to make the polynomials track the lane more accurately:
 1. In my previous submission the threshold filter was not doing a good job when there was shade and sudden changes in light. In my current version, I use a combination of six thresholds (in cell 8) which does well in both normal light as well as under shade making my line detection more accurate
